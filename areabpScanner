@@ -1,0 +1,30 @@
+#!/usr/bin/env  bash
+#Support at @maeri  https://maerihn.netlify.app
+
+cred="\033[31;40m"
+cmagneta="\033[35;40m"
+none="\033[0m"
+
+echo -e $cmagneta "\t\t\t \033[5mPowered By http://maerihn.netlify.app$none"
+if [ $#-ne1 ]
+then
+       echo "Usage:`basename $0` {ip address or hostname}"
+fi
+
+#set variable for ip
+ip_address=$1 
+port=$2
+#set current date on script
+
+echo `date`>>$ip_address.open_ports
+
+#comment out the for loop choose generator to use
+for port in {1..65535}
+do
+#use short timeout to write to port
+#port=1-100
+       timeout 1 echo $(nc -zvn $ip_address $port )
+       #check retun value
+            #append results after file named host and date
+            echo "port $port is open" >> "$ip_address.open_ports"
+done
